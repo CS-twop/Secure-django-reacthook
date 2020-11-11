@@ -1,0 +1,92 @@
+.home-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    background-image: url(../images/pill.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.lower-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 50%;
+    width: 100%;
+}
+
+.title-container{
+    display: flex;
+    font-family: 'Courier New', Courier, monospace;
+    color:rgb(57, 255, 20);
+    text-align: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.header {
+    width:80%;
+    background-color:black;
+    border: 4px double rgb(57, 255, 20);
+    padding: 1% 0;
+}
+
+.left-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 40%;
+    padding-top: 10%;
+    /* padding: 30% 0%; */
+
+}
+
+.right-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 10%;
+}
+
+.home-in-btn {
+    width: 100%;
+    height: 25%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    /* font-weight: bold; */
+    text-align: center;
+    color: rgb(8, 103, 195);
+    background-color: black;
+    border: 4px double black;
+    animation: blinkBlue 1s;
+    animation-iteration-count: infinite;
+}
+
+.home-up-btn {
+    width: 100%;
+    height: 25%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    /* font-weight: bold; */
+    text-align: center;
+    color: rgb(214, 39, 36);
+    background-color: black;
+    border: 4px double black;
+    animation: blinkRed 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blinkBlue { 50% { border-color:rgb(8, 103, 195); }  }
+@keyframes blinkRed { 50% { border-color:rgb(214, 39, 36); }  }
+
+.home-btn:focus{
+    outline-color:rgb(57, 120, 20);
+}
