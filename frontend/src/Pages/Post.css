@@ -1,0 +1,24 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+}
+
+.post-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.poster-detail {
+    display: flex;
+    width: 50%;
+    height: auto;
+}
+
+.post-btns {
+    display: flex;
+    width: 50%;
+    height: auto;
+}
