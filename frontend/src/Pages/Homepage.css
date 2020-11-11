@@ -35,9 +35,14 @@
 .header {
     width:80%;
     background-color:black;
-    border: 4px double rgb(57, 255, 20);
+    border: 4px double black;
+    box-shadow: 0 0 10px 0 rgb(57, 255, 20);
     padding: 1% 0;
+    animation: blinkGreen 5s;
+    animation-iteration-count: infinite;
 }
+
+@keyframes blinkGreen { 50% { border-color:rgb(57, 255, 20); }  }
 
 .left-container{
     display: flex;
@@ -45,8 +50,6 @@
     justify-content: center;
     padding-right: 40%;
     padding-top: 10%;
-    /* padding: 30% 0%; */
-
 }
 
 .right-container{
@@ -66,8 +69,9 @@
     color: rgb(8, 103, 195);
     background-color: black;
     border: 4px double black;
-    animation: blinkBlue 1s;
+    animation: blinkBlue 3s;
     animation-iteration-count: infinite;
+    box-shadow: 0 0 10px 0 rgb(8, 103, 195);
 }
 
 .home-up-btn {
@@ -75,18 +79,14 @@
     height: 25%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 3rem;
-    /* font-weight: bold; */
     text-align: center;
     color: rgb(214, 39, 36);
     background-color: black;
     border: 4px double black;
-    animation: blinkRed 1s;
+    animation: blinkRed 3s;
     animation-iteration-count: infinite;
+    box-shadow: 0 0 10px 0 rgb(214, 39, 36);
 }
 
 @keyframes blinkBlue { 50% { border-color:rgb(8, 103, 195); }  }
 @keyframes blinkRed { 50% { border-color:rgb(214, 39, 36); }  }
-
-.home-btn:focus{
-    outline-color:rgb(57, 120, 20);
-}
