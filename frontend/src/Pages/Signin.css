@@ -10,7 +10,7 @@
     background-image: url(../images/matrix.gif);
 }
 
-.signup-box {
+.signin-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,14 +30,14 @@
 }
 @keyframes blink { 50% { border-color:rgb(57, 120, 20); }  }
 
-.sigup-header{
+.signin-header{
     text-align: center;
     font-size: 3rem;
     font-family: 'Courier New', Courier, monospace;
     color: rgb(57, 255, 20);
 }
 
-.signup-subbox {
+.signin-subbox {
     vertical-align: middle;
     width: 100%;
     display: flex;
@@ -62,7 +62,7 @@
     outline: none;
 }
 
-.signup-btn:focus{
+.signin-btn:focus{
     outline-color:rgb(57, 120, 20);
 }
 
@@ -76,7 +76,7 @@
     color: rgb(57, 255, 20);
 }
 
-.signup-btn {
+.signin-btn {
     width: 30%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
@@ -87,7 +87,7 @@
     border: 4px double rgb(57, 255, 20);
 }
 
-.signup-btn-subbox {
+.signin-btn-subbox {
     display: flex;
     justify-content: center;
     align-items: center;
