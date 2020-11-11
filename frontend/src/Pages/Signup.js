@@ -9,6 +9,7 @@ function Signup () {
                     <div className='signup-subbox' id='usrn'>
                         <label className='label'>Username:</label>
                         <input
+                            autocomplete='off'
                             className='input-authen'
                             type='text'
                             name='username'

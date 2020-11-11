@@ -52,7 +52,16 @@
     padding: 2%;
     color: rgb(57, 255, 20);
     background-color: black;
+    caret-color:rgb(57, 255, 20);
     border: 1px solid rgb(57, 255, 20);
+}
+
+.input-authen:focus{
+    outline: none;
+}
+
+.signup-btn:focus{
+    outline-color:black;
 }
 
 .label {
