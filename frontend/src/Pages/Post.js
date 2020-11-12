@@ -1,10 +1,29 @@
 import './Post.css';
 import Comment from './Comment';
 import WriteComment from './WriteComment'; 
+import React, { useState , useEffect } from 'react';
 
 
 
 function Post(props) {
+    const [checkUser,setCheckUser] = useState(false)
+    const [checkEdit,setCheckEdit] = useState(false)
+
+    useEffect(() => {
+        if(props.user === props.poster)
+            setCheckUser(true)
+        else
+            setCheckUser(false)
+    },[props.user, props.poster])
+
+
+    function handleEdit(){
+        setCheckEdit(true)
+    }
+
+    function handleDone(){
+        setCheckEdit(false)
+    }
 
     return (
         <div className='post'>
@@ -13,8 +32,9 @@ function Post(props) {
                     <div className='poster-name'>{props.poster}</div>
                 </div>
                 <div className='post-btns'>
-                    <input className='edit-btn' type='button' value='EDIT'></input>
-                    <input className='delete-btn' type='button' value='DELETE'></input>
+                    {(checkUser && !checkEdit) ? <input className='edit-btn' type='button' value='EDIT' onClick={handleEdit}></input>: null}
+                    {(checkUser && checkEdit) ? <input className='done-btn' type='button' value='DONE' onClick={handleDone}></input>: null}
+                    {checkUser ? <input className='delete-btn' type='button' value='DELETE'></input>: null}
                 </div>
             </div>
             <div className='post-context'>
@@ -25,7 +45,7 @@ function Post(props) {
             <div className='line'></div>
             <div className='comment-part'>
                 <WriteComment user={props.user}/>
-                {props.comments.map(comment => (<Comment commenter={comment.commenter} content={comment.content}/>))}
+                {props.comments.map(comment => (<Comment user={props.user} commenter={comment.commenter} content={comment.content}/>))}
             </div>
             
         </div>
