@@ -1,4 +1,4 @@
-.comment {
+.write-comment {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5%;
@@ -9,18 +9,18 @@
     overflow: auto;
 }
 
-.comment-header{
+.write-comment-header{
     display: flex;
     flex-direction: row;
     color: rgb(57, 255, 20);
 }
 
-.commenter {
+.write-commenter {
     padding-left:1%;
-    width: 90%;
+    width: 94.5%;
 }
 
-.content {
+.write-content {
     width:95%;
     background-color: black;
     color: rgb(57, 255, 20);
@@ -31,56 +31,38 @@
     padding:1.5%;
 }
 
-.comment-btns{
+.write-comment-btns{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-content: flex-end;
 }
 
-.edit-comment-btn {
+.post-comment-btn {
     background-color: black;
     color: rgb(57, 255, 20);
     border: 1px dotted rgb(57, 255, 20);
-    width:70%;
+    width:100%;
     font-size: 0.7vw;
     float: top;
     height: 24px;
 }
 
-.delete-comment-btn {
-    background-color: black;
-    color: rgb(57, 255, 20);
-    border: 1px dotted rgb(57, 255, 20);
-    width:70%;
-    font-size: 0.7vw;
-    margin-left:5%;
-    float: top;
-    height: 24px;
-}
-
-.delete-comment-btn:focus {
+.post-comment-btn:focus {
     outline: none;
-    color:rgb(214, 39, 36);
-    border: 4px double rgb(214, 39, 36);
+    background-color: rgb(57, 255, 20,0.3);
 }
 
-.edit-comment-btn:focus {
-    outline: none;
-    color:rgb(8, 103, 195);
-    border: 4px double rgb(8, 103, 195);
-}
-
-.comment-box{
+.write-comment-box {
     background-color: black;
     border: black;
     caret-color: rgb(57, 255, 20);
     color: rgb(57, 255, 20);
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
-    resize: none;
-    overflow: auto;
+    resize: none
 }
 
-.comment-box:focus {
+.write-comment-box:focus{
     outline: none;
 }

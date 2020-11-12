@@ -13,7 +13,9 @@ function Comment() {
                 </div>
             </div>  
             <div className='content' >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis suscipit arcu, vitae maLorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis suscipit arcu, vitae maLorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis suscipit arcu, vitae maLorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis suscipit arcu, vitae ma
+                <textarea className='comment-box' rows='2' cols='94' readOnly='true'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                </textarea>
             </div>
                 
         </div>

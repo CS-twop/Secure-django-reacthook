@@ -1,8 +1,8 @@
-.post {
+.write-post {
     display: flex;
     flex-direction: column;
     width: 80%;
-    height: 420px;
+    height: 240px;
     padding: 2%;
     padding-top: 0.5%;
     background-color: black;
@@ -11,51 +11,44 @@
     overflow: auto;
 }
 
-.poster-name{
+.writer{
     color: rgb(57, 255, 20);
     font-family: 'Courier New', Courier, monospace;
     font-size: 2rem;
 }
 
-.post-context{
+.write-post-context{
     color: rgb(57, 255, 20);
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
     margin: 2% 0%;
     margin-top:1%;
+    margin-bottom: 0.5%;
     padding: 2%;
     background-color: black;
     border: 2px solid rgb(57, 255, 20);
 }
 
-.post-header {
+.write-post-header {
     margin-top:1%;
     display: flex;
     width: 100%;
 }
 
-.poster-detail {
+.write-post-detail {
     display: flex;
     width: 50%;
     justify-content: left;
 }
 
-.post-btns {
+.write-post-btns {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     width: 50%;
 }
 
-.edit-btn{
-    background-color: black;
-    color: rgb(57, 255, 20);
-    border: 1px solid rgb(57, 255, 20);
-    width:14%;
-    font-size: 0.9vw;
-}
-
-.delete-btn{
+.post-btn{
     background-color: black;
     color: rgb(57, 255, 20);
     border: 1px solid rgb(57, 255, 20);
@@ -64,26 +57,12 @@
     font-size: 0.9vw;
 }
 
-.delete-btn:focus {
+.post-btn:focus {
     outline: none;
-    color:rgb(214, 39, 36);
-    border: 4px double rgb(214, 39, 36);
+    background-color: rgb(57, 255, 20,0.3);
 }
 
-.edit-btn:focus {
-    outline: none;
-    color:rgb(8, 103, 195);
-    border: 4px double rgb(8, 103, 195);
-}
-
-.line {
-    width: 100%;
-    border: 0.0001px solid rgb(57, 255, 20);
-    height: 0px;
-    margin-bottom: 1%;
-}
-
-.post-box {
+.write-post-box {
     background-color: black;
     border: black;
     caret-color: rgb(57, 255, 20);
@@ -93,6 +72,6 @@
     resize: none
 }
 
-.post-box:focus{
+.write-post-box:focus{
     outline: none;
 }

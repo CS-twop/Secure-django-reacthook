@@ -1,5 +1,6 @@
 import './Post.css';
 import Comment from './Comment';
+import WriteComment from './WriteComment'; 
 
 function Post() {
     return (
@@ -14,10 +15,13 @@ function Post() {
                 </div>
             </div>
             <div className='post-context'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis suscipit arcu, vitae maximus lacus iaculis et. Sed id eros cursus, ultricies libero ut, tempus neque. Nunc in mauris sit amet sapien interdum rhoncus non ut felis. Phasellus ac placerat ligula. Morbi eget aliquet nibh. Aliquam eleifend finibus mi, quis suscipit odio hendrerit ac. Quisque lobortis semper quam quis porttitor.hendrerit ac. Quisque lobortis semper quam quis porttitor.
+                <textarea className='post-box' rows='5' cols='95' readOnly='true'>
+                    Lorem ipsum doculis et. Sed id eros cursus, ultricies libero ut, tempus neque. Nunc in mauris sit amet sapien interdum rhoncus non ut felis. Phasellus ac placerat ligula. Morbi eget aliquet nibh. Aliquam eleifend finibus mi, quis suscipit odio hendrerit ac. Quisque lobortis semper quam quis porttitor.hendrerit ac. Quisque lobortis semper quam quis porttitor.
+                </textarea>
             </div>
             <div className='line'></div>
             <div className='comment-part'>
+                <WriteComment />
                 <Comment />
                 <Comment />
             </div>

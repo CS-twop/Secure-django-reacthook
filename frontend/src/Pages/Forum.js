@@ -1,4 +1,5 @@
 import Post from './Post';
+import WritePost from './WritePost';
 import './Forum.css';
 
 function Forum() {
@@ -11,6 +12,7 @@ function Forum() {
                 </div>
             </div>
             <div className='forum-posts'>
+                <WritePost />
                 <Post />
                 <Post />
                 <Post />
