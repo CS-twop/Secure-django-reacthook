@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 
 function Forum() {
+    const [user, setUser] = useState('Morpheus')
     const [posts, setPosts] = useState(
         [
             { 
@@ -44,8 +45,8 @@ function Forum() {
                 </div>
             </div>
             <div className='forum-posts'>
-                <WritePost />
-                {posts.map(post => (<Post poster={post.poster} content={post.content} comments={post.comments}/>))}
+                <WritePost user={user}/>
+                {posts.map(post => (<Post user={user} poster={post.poster} content={post.content} comments={post.comments}/>))}
             </div>
         </div>
     );

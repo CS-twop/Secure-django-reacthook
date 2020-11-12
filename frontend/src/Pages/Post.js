@@ -24,7 +24,7 @@ function Post(props) {
             </div>
             <div className='line'></div>
             <div className='comment-part'>
-                <WriteComment />
+                <WriteComment user={props.user}/>
                 {props.comments.map(comment => (<Comment commenter={comment.commenter} content={comment.content}/>))}
             </div>
             
