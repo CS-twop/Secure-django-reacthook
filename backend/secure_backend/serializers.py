@@ -26,13 +26,16 @@ class UserSerializer(ModelSerializer):
         return instance
 
 class PostSerializer(ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    # owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Post
-        fields = ('owner', 'content')
+        fields = '__all__'
 
     def create(self, data):
+        # owner_name = data.pop('owner', None)
+        # owner_id = User.objects.get(username=owner_name).id
+        # data['owner'] = owner_id
         # ! ไม่ควรให่้คนอื่นมาปลอมแปลง มาคอมเมนท์แทนด้วย 
         instance = self.Meta.model(**data)
         instance.save()

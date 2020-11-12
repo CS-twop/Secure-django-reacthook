@@ -34,6 +34,11 @@ class PostCreate(APIView):
     # ! Don't forget change permissions
     permission_classes = (permissions.AllowAny, )
     def post(self, request, format='json'):
+        # # ! hack 
+        # owner_name = request.data.pop('owner', None)
+        # owner_id = User.objects.get(username=owner_name)
+        # request.data['owner'] = owner_id
+
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             post = serializer.save()
