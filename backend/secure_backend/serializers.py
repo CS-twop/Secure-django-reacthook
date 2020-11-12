@@ -2,6 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault
 
 from .models import Post
 
@@ -26,16 +27,16 @@ class UserSerializer(ModelSerializer):
         return instance
 
 class PostSerializer(ModelSerializer):
-    # owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('content',)
 
     def create(self, data):
-        # owner_name = data.pop('owner', None)
+        print(data)
+        owner_name = data.pop('owner', None)
         # owner_id = User.objects.get(username=owner_name).id
-        # data['owner'] = owner_id
+        data['owner'] = self.context['request'].user
         # ! ไม่ควรให่้คนอื่นมาปลอมแปลง มาคอมเมนท์แทนด้วย 
         instance = self.Meta.model(**data)
         instance.save()

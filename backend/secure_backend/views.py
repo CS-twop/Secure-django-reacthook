@@ -5,6 +5,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.response import Response 
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth.models import User
 
@@ -32,14 +33,18 @@ class UserCreate(APIView):
 
 class PostCreate(APIView):
     # ! Don't forget change permissions
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (IsAuthenticated, )
     def post(self, request, format='json'):
         # # ! hack 
+        # data = request.data
         # owner_name = request.data.pop('owner', None)
+        # print(owner_name)
         # owner_id = User.objects.get(username=owner_name)
-        # request.data['owner'] = owner_id
-
-        serializer = PostSerializer(data=request.data)
+        # data['owner'] = owner_id
+        context={
+            'request': request
+        }
+        serializer = PostSerializer(data=request.data, context=context)
         if serializer.is_valid():
             post = serializer.save()
             if post:
