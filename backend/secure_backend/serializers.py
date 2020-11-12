@@ -6,16 +6,21 @@ from rest_framework import serializers
 
 class UserSerializer(ModelSerializer):
 
-    email = serializers.EmailField()
+    email = serializers.EmailField(required=True)
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
 
-    def create(self, validated_data):
-        if validated_data['password'] != None:
-            instance = self.Meta.model(**validated_data)
-            instance.save()
-            return instance
-
     class Meta:
         model = User
-        field = ('email', 'username', 'password')
+        fields = ('email', 'username', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance
+
+    
