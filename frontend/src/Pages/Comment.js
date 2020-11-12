@@ -1,11 +1,11 @@
 import './Comment.css';
 
-function Comment() {
+function Comment(props) {
     return (
         <div className='comment'>
             <div className='comment-header'>
                 <div className='commenter'>
-                    Mr.Anderson
+                    {props.commenter}
                 </div>
                 <div className='comment-btns'>
                         <input className='edit-comment-btn' type='button' value='EDIT'></input>
@@ -14,7 +14,7 @@ function Comment() {
             </div>  
             <div className='content' >
                 <textarea className='comment-box' rows='2' cols='94' readOnly='true'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    {props.content}
                 </textarea>
             </div>
                 

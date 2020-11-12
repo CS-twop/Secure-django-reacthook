@@ -2,12 +2,15 @@ import './Post.css';
 import Comment from './Comment';
 import WriteComment from './WriteComment'; 
 
-function Post() {
+
+
+function Post(props) {
+
     return (
         <div className='post'>
             <div className='post-header'>
                 <div className='poster-detail'>
-                    <div className='poster-name'>Neo</div>
+                    <div className='poster-name'>{props.poster}</div>
                 </div>
                 <div className='post-btns'>
                     <input className='edit-btn' type='button' value='EDIT'></input>
@@ -16,14 +19,13 @@ function Post() {
             </div>
             <div className='post-context'>
                 <textarea className='post-box' rows='5' cols='95' readOnly='true'>
-                    Lorem ipsum doculis et. Sed id eros cursus, ultricies libero ut, tempus neque. Nunc in mauris sit amet sapien interdum rhoncus non ut felis. Phasellus ac placerat ligula. Morbi eget aliquet nibh. Aliquam eleifend finibus mi, quis suscipit odio hendrerit ac. Quisque lobortis semper quam quis porttitor.hendrerit ac. Quisque lobortis semper quam quis porttitor.
+                   {props.content}
                 </textarea>
             </div>
             <div className='line'></div>
             <div className='comment-part'>
                 <WriteComment />
-                <Comment />
-                <Comment />
+                {props.comments.map(comment => (<Comment commenter={comment.commenter} content={comment.content}/>))}
             </div>
             
         </div>
