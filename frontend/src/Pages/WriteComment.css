@@ -9,6 +9,10 @@
     overflow: auto;
 }
 
+/* .write-comment-box::-webkit-scrollbar{
+    display: none;
+} */
+
 .write-comment-header{
     display: flex;
     flex-direction: row;
@@ -60,7 +64,10 @@
     color: rgb(57, 255, 20);
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
-    resize: none
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
 }
 
 .write-comment-box:focus{

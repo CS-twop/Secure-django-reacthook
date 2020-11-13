@@ -103,9 +103,9 @@
     outline: none;
 }
 
-.comment-box::-webkit-scrollbar{
+/* .comment-box::-webkit-scrollbar{
     display: none;
-}
+} */
 
 .edit-comment-box{
     background-color: rgba(57, 255, 20,0.1);
@@ -124,6 +124,6 @@
     outline: none;
 }
 
-.edit-comment-box::-webkit-scrollbar{
+/* .edit-comment-box::-webkit-scrollbar{
     display: none;
-}
+} */

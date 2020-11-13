@@ -12,7 +12,7 @@ function WriteComment(props) {
                 </div>
             </div>  
             <div className='content' >
-                <textarea className='write-comment-box' rows='3' cols='94' ></textarea>
+                <textarea className='write-comment-box' rows='3'></textarea>
             </div>
                 
         </div>
