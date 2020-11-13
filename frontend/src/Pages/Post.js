@@ -38,9 +38,8 @@ function Post(props) {
                 </div>
             </div>
             <div className='post-context'>
-                <textarea className='post-box' rows='5' cols='95' readOnly='true'>
-                   {props.content}
-                </textarea>
+                {!checkEdit ? <textarea className='post-box' rows='5' readOnly='true'>{props.content}</textarea>:null}
+                {(checkUser && checkEdit) ? <textarea className='edit-box' rows='5'>{props.content}</textarea>:null}
             </div>
             <div className='line'></div>
             <div className='comment-part'>

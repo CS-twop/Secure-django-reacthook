@@ -106,9 +106,37 @@
     color: rgb(57, 255, 20);
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
-    resize: none
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
 }
 
 .post-box:focus{
     outline: none;
+}
+
+.post-box::-webkit-scrollbar{
+    display: none;
+}
+
+.edit-box {
+    background-color: rgba(57, 255, 20,0.1);
+    border: black;
+    caret-color: rgb(57, 255, 20);
+    color: rgb(57, 255, 20);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+}
+
+.edit-box:focus{
+    outline: none;
+}
+
+.edit-box::-webkit-scrollbar{
+    display: none;
 }

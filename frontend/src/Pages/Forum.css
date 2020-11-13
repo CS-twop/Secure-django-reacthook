@@ -15,6 +15,10 @@
     width: 90%;
 }
 
+.forum-posts::-webkit-scrollbar{
+    display: none;
+}
+
 .Navbar {
     display: flex;
     position: fixed;

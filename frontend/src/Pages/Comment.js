@@ -33,9 +33,8 @@ function Comment(props) {
                 </div>
             </div>  
             <div className='content' >
-                <textarea className='comment-box' rows='2' cols='94' readOnly='true'>
-                    {props.content}
-                </textarea>
+                {!checkEdit ? <textarea className='comment-box' rows='2' readOnly='true'>{props.content}</textarea> :null}
+                {(checkUser && checkEdit) ? <textarea className='edit-comment-box' rows='2'>{props.content}</textarea> :null}
             </div>
                 
         </div>
