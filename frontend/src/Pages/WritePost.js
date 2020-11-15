@@ -7,11 +7,18 @@ function WritePost(props) {
 
     const onClickPost = () => {
         alert(post)    
-        // try{
-        //     axiosInstance.post(`post/create`)
-        // }catch (error){
-        //     throw error
-        // }
+        try{
+            axiosInstance.post(`post/create/`,
+            {
+                content: post
+            }
+            )
+                .then(response => {
+                    console.log(response.data)
+                })
+        }catch (error){
+            throw error
+        }
     }
 
     return (

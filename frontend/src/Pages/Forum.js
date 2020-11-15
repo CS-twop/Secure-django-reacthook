@@ -3,9 +3,11 @@ import WritePost from './WritePost';
 import './Forum.css';
 import React, { useState } from 'react';
 import axiosInstance from "../axiosApi";
+import {useHistory} from "react-router-dom"
 
 
 function Forum() {
+    const history = useHistory()
     const [user, setUser] = useState('Morpheus')
     const [posts, setPosts] = useState(
         [
@@ -48,7 +50,12 @@ function Forum() {
         ]
     )
 
-    //get post
+    const onClickSignOut = () => {
+        localStorage.clear()
+        history.push("/signin")
+    }
+
+    // get post
     // useEffect(() => {
     //     try{
     //         axiosInstance.get(`posts`)
@@ -66,7 +73,7 @@ function Forum() {
             <div className='Navbar'>
                 <div className='forum-header'>FORUM</div>
                 <div className='navbar-btn'>
-                    <input className='signout-btn' type='button' value='SIGNOUT'></input>
+                    <input className='signout-btn' type='button' value='SIGNOUT'onClick={onClickSignOut} ></input>
                 </div>
             </div>
             <div className='forum-posts'>
