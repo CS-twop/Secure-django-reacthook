@@ -36,6 +36,20 @@ class PostSerializer(ModelSerializer):
         instance = self.Meta.model(**data)
         instance.save()
         return instance
+    def update(self, instance, validated_data):
+        """
+            Update post
+        """
+        # only allow to change the content
+
+        new_content = validated_data.get('content', None)
+        # check content
+        if new_content is None:
+            return instance
+
+        instance.content = validated_data.get('content', new_content)
+        instance.save()
+        return instance
         
 class CommentSerializer(ModelSerializer):
     commenter = serializers.ReadOnlyField(source="commenter.username")
@@ -48,3 +62,5 @@ class CommentSerializer(ModelSerializer):
         instance.save()
         return instance 
         
+    
+    

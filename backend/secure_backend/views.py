@@ -12,8 +12,6 @@ from django.contrib.auth.models import User
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
 
-# User
-
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer 
@@ -33,16 +31,11 @@ class UserCreate(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class UserUpdate(APIView):
-#     permission_classes = (permissions.IsAuthenticated,)
-#     def patch(self, request, user_id):
-        
-        
-
-# Post 
-
 class PostCreate(APIView):
-    # ! Don't forget change permissions
+    """
+            Create api endpoint for creating post object, authentication 
+            is needed.
+    """
     permission_classes = (IsAuthenticated, )
     def post(self, request, format='json'):
         # # ! hack 
@@ -62,12 +55,36 @@ class PostCreate(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class PostList(generics.ListAPIView):
-    queryset = Post.objects.all()
+class PostUpdate(generics.UpdateAPIView):
+    """
+        Update api endpoint for updating post, authentication is needed.
+    """
+    permission_classes = (IsAuthenticated, )
     serializer_class = PostSerializer
-
-# Comment 
+    
+    def get_object(self):
+        # print(self.request.data)
+        return Post.objects.get(pk=self.request.data['post_id'])
+        
+    def put(self, request, *args, **kwargs):
+        obj = self.get_object()
+        serializer = PostSerializer(obj,data=request.data,partial=True)
+        if serializer.is_valid():
+            post = serializer.save()
+            if post:
+                json = serializer.data
+                return Response(json, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class PostDelete(generics.DestroyAPIView):
+    """
+        Delete api endpoint for deleting post, authentication is needed.
+    """
+    permission_classes = (IsAuthenticated, )
+    
+    def delete(self, request, *args, **kwargs):
+        # TODO  
+        return super().delete(request, *args, **kwargs)
 
 class CommentCreate(APIView):
     permission_classes = (IsAuthenticated, )
@@ -75,7 +92,7 @@ class CommentCreate(APIView):
         context = {
             'request': request,
         }
-        serializer = CommentSerializer(data=request.data, context=context)
+        serializer = CommentSerializer(data=request, context=context)
         if serializer.is_valid():
             comment = serializer.save()
             if comment:
