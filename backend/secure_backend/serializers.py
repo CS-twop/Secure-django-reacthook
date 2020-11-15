@@ -55,7 +55,7 @@ class CommentSerializer(ModelSerializer):
     commenter = serializers.ReadOnlyField(source="commenter.username")
     class Meta: 
         model = Comment 
-        fields = ("post_parent", 'commenter', 'content')
+        fields = ("post_id", 'commenter', 'content')
     def create(self, data):
         data['commenter'] = self.context['request'].user
         instance = self.Meta.model(**data)

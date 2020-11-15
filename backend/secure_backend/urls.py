@@ -1,9 +1,9 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import (UserCreate, HelloWorldView, UserList, UserDetail, \
+from .views import (UserCreate, UserList, \
     PostCreate, PostList, PostUpdate, \
-    CommentCreate, CommentList)
+    CommentCreate, CommentList, CommentUpdate)
 
 urlpatterns = [
     # User 
@@ -11,16 +11,6 @@ urlpatterns = [
         'user/create/', 
         UserCreate.as_view(), 
         name='create_user'
-    ),
-    path(
-        'users/',
-        UserList.as_view(),
-        name='user_list'    
-    ),
-    path(
-        'users/<int:pk>/',
-        UserDetail.as_view(),
-        name='user_detail'
     ),
     # Post
     path(
@@ -49,6 +39,11 @@ urlpatterns = [
         CommentList.as_view(),
         name='comment_list'
     ),
+    path( 
+        'comment/update/',
+        CommentUpdate.as_view(),
+        name='comment update'
+    ),
     # Token 
     path(
         'token/obtain/', 
@@ -59,10 +54,5 @@ urlpatterns = [
         'token/refresh/',
         jwt_views.TokenRefreshView.as_view(),
         name='token_refresh'
-    ),
-    path(
-        'hello/', 
-        HelloWorldView.as_view(),
-        name='hello_world'
     )
 ]

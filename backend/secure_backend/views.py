@@ -12,15 +12,22 @@ from django.contrib.auth.models import User
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
 
+#######################################
+############### USER ##################
+#######################################
+
 class UserList(generics.ListAPIView):
+    """ 
+            Create api endpoint for displaying all users, authentication is needed
+    """
+    permissions = (permissions.IsAuthenticated, )
     queryset = User.objects.all()
     serializer_class = UserSerializer 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class UserCreate(APIView):
-    # ! Don't forget change permissions
+    """
+            Create api endpoint for creating user object, anyone is allowed to register 
+    """
     permission_classes = (permissions.AllowAny, )
     def post(self, request, format='json'):
         serializer = UserSerializer(data=request.data)
@@ -31,6 +38,18 @@ class UserCreate(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+#######################################
+############### POST ##################
+#######################################
+
+class PostList(generics.ListAPIView):
+    """ 
+            Create api endpoint for displaying all posts, anyone is allowed to see
+    """
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer 
+
 class PostCreate(APIView):
     """
             Create api endpoint for creating post object, authentication 
@@ -38,12 +57,6 @@ class PostCreate(APIView):
     """
     permission_classes = (IsAuthenticated, )
     def post(self, request, format='json'):
-        # # ! hack 
-        # data = request.data
-        # owner_name = request.data.pop('owner', None)
-        # print(owner_name)
-        # owner_id = User.objects.get(username=owner_name)
-        # data['owner'] = owner_id
         context={
             'request': request
         }
@@ -69,13 +82,13 @@ class PostUpdate(generics.UpdateAPIView):
     def put(self, request, *args, **kwargs):
         obj = self.get_object()
         serializer = PostSerializer(obj,data=request.data,partial=True)
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user == obj['owner']: 
             post = serializer.save()
             if post:
                 json = serializer.data
                 return Response(json, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
 class PostDelete(generics.DestroyAPIView):
     """
         Delete api endpoint for deleting post, authentication is needed.
@@ -86,13 +99,17 @@ class PostDelete(generics.DestroyAPIView):
         # TODO  
         return super().delete(request, *args, **kwargs)
 
+class CommentList(generics.ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
 class CommentCreate(APIView):
     permission_classes = (IsAuthenticated, )
     def post(self, request, format='json'):
         context = {
             'request': request,
         }
-        serializer = CommentSerializer(data=request, context=context)
+        serializer = CommentSerializer(data=request.data, context=context)
         if serializer.is_valid():
             comment = serializer.save()
             if comment:
@@ -100,12 +117,26 @@ class CommentCreate(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CommentList(generics.ListAPIView):
-    queryset = Comment.objects.all()
+class CommentUpdate(generics.UpdateAPIView):
+    """
+        Update api endpoint for updating comment, authentication is needed.
+    """
+    permission_classes = (IsAuthenticated, )
     serializer_class = CommentSerializer
+    
+    def get_object(self):
+        # print(self.request.data)
+        return Comment.objects.get(pk=self.request.data['comment_id'])
+        
+    def put(self, request, *args, **kwargs):
+        obj = self.get_object()
+        serializer = CommentSerializer(obj,data=request.data,partial=True)
+        if serializer.is_valid() and request.user == obj['commenter']:
+            comment = serializer.save()
+            if comment:
+                json = serializer.data
+                return Response(json, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
-class HelloWorldView(APIView):
-    permission_classes = (permissions.IsAuthenticated, )
 
-    def get(self, request):
-        return Response(data={'hello': 'world'}, status=status.HTTP_200_OK)
