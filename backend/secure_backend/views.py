@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
-from .permissions import IsPostOwnerOrAdmin, IsCommenterOrAdmin
+from .permissions import IsOwnerOrAdmin
 
 #######################################
 ############### USER ##################
@@ -72,7 +72,7 @@ class PostUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating post, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     serializer_class = PostSerializer
     
     def get_object(self):
@@ -94,7 +94,7 @@ class PostDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting post, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     
     def get_queryset(self):
         posts = Post.objects.filter(id=self.request.data['post_id'])
@@ -138,7 +138,7 @@ class CommentUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating comment, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     serializer_class = CommentSerializer
     
     def get_object(self):
@@ -160,7 +160,7 @@ class CommentDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting comment, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     
     def get_queryset(self):
         comments = Comment.objects.filter(id=self.request.data['comment_id']) 

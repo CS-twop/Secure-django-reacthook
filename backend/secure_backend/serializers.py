@@ -27,12 +27,12 @@ class UserSerializer(ModelSerializer):
 
 class PostSerializer(ModelSerializer):
     # comments = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Comment.objects.all())
-    owner = serializers.ReadOnlyField(source='owner.username')
+    user = serializers.ReadOnlyField(source='user.username')
     class Meta:
         model = Post
-        fields = ('owner', 'content')
+        fields = ('user', 'content')
     def create(self, data):
-        data['owner'] = self.context['request'].user
+        data['user'] = self.context['request'].user
         instance = self.Meta.model(**data)
         instance.save()
         return instance
@@ -52,12 +52,12 @@ class PostSerializer(ModelSerializer):
         return instance
         
 class CommentSerializer(ModelSerializer):
-    commenter = serializers.ReadOnlyField(source="commenter.username")
+    user = serializers.ReadOnlyField(source="user.username")
     class Meta: 
         model = Comment 
-        fields = ("post_id", 'commenter', 'content')
+        fields = ("post_id", 'user', 'content')
     def create(self, data):
-        data['commenter'] = self.context['request'].user
+        data['user'] = self.context['request'].user
         instance = self.Meta.model(**data)
         instance.save()
         return instance 
