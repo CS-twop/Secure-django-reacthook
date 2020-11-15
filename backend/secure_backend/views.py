@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
-from .permissions import IsAuthenPost, IsAuthenComment
+from .permissions import IsPostOwnerOrAdmin, IsCommenterOrAdmin
 
 #######################################
 ############### USER ##################
@@ -55,7 +55,7 @@ class PostCreate(APIView):
             Create api endpoint for creating post object, authentication 
             is needed.
     """
-    permission_classes = (IsAuthenticated, )
+    permission_classes = [IsAuthenticated,]
     def post(self, request, format='json'):
         context={
             'request': request
@@ -72,7 +72,7 @@ class PostUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating post, authentication is needed.
     """
-    permission_classes = (IsAuthenticated, IsAuthenPost,)
+    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
     serializer_class = PostSerializer
     
     def get_object(self):
@@ -94,11 +94,13 @@ class PostDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting post, authentication is needed.
     """
-    permission_classes = (IsAuthenticated, IsAuthenPost,)
+    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
     
-    # ! have to check permissions 
     def get_queryset(self):
-        return Post.objects.filter(id=self.request.data['post_id'])
+        posts = Post.objects.filter(id=self.request.data['post_id'])
+        for post in posts:
+            self.check_object_permissions(self.request, post)
+        return posts 
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_queryset()
@@ -136,7 +138,7 @@ class CommentUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating comment, authentication is needed.
     """
-    permission_classes = (IsAuthenticated, IsAuthenComment,)
+    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
     serializer_class = CommentSerializer
     
     def get_object(self):
@@ -158,11 +160,13 @@ class CommentDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting comment, authentication is needed.
     """
-    permission_classes = (IsAuthenticated, IsAuthenComment,)
+    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
     
-    # ! have to check permissions 
     def get_queryset(self):
-        return Comment.objects.filter(id=self.request.data['comment_id'])
+        comments = Comment.objects.filter(id=self.request.data['comment_id']) 
+        for comment in comments:
+            self.check_object_permissions(self.request, comment)
+        return comments
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_queryset()
