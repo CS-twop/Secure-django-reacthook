@@ -2,6 +2,7 @@ import Post from './Post';
 import WritePost from './WritePost';
 import './Forum.css';
 import React, { useState } from 'react';
+import axiosInstance from "../axiosApi";
 
 
 function Forum() {
@@ -46,6 +47,18 @@ function Forum() {
             }
         ]
     )
+
+    //get post
+    // useEffect(() => {
+    //     try{
+    //         axiosInstance.get(`post`)
+    //         .then(response => {
+    //            setPosts(response.data)
+    //         })
+    //     } catch(error){
+    //         throw error
+    //     }
+    // },[])
 
 
     return (

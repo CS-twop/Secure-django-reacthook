@@ -10,6 +10,7 @@ function Signin () {
     const handleSubmit = () => {
         // console.log(username)
         // console.log(password)
+        alert("dfsdf")
         let json = {
             "username": username,
             "password": password
@@ -17,11 +18,10 @@ function Signin () {
         console.log(json)
         try{
             axiosInstance.post(`token/obtain`,json)
-            .then((response) => {
+            .then(response => {
                 axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                alert(response.data)
             })
         } catch(error){
             throw error
@@ -38,7 +38,6 @@ function Signin () {
                             autocomplete='off'
                             className='input-authen'
                             type='text'
-                            name='username'
                             value = {username}
                             onChange = {(e)=> setUsername(e.target.value)}
                             placeholder='Put your nice username'
@@ -50,7 +49,6 @@ function Signin () {
                         <input
                             className='input-authen'
                             type='password'
-                            name='password'
                             value = {password}
                             onChange = {(e)=> setPassword(e.target.value)}
                             placeholder='Put your secure password'
