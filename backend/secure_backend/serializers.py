@@ -33,16 +33,24 @@ class PostSerializer(ModelSerializer):
         fields = ('content',)
 
     def create(self, data):
-        print(data)
         owner_name = data.pop('owner', None)
-        # owner_id = User.objects.get(username=owner_name).id
         data['owner'] = self.context['request'].user
         # ! ไม่ควรให่้คนอื่นมาปลอมแปลง มาคอมเมนท์แทนด้วย 
         instance = self.Meta.model(**data)
         instance.save()
         return instance
-        
-
-
-
     
+    def update(self, instance, validated_data):
+        """
+            Update post
+        """
+        # only allow to change the content
+
+        new_content = validated_data.get('content', None)
+        # check content
+        if new_content is None:
+            return instance
+
+        instance.content = validated_data.get('content', new_content)
+        instance.save()
+        return instance
