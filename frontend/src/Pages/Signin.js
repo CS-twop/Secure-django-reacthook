@@ -1,41 +1,42 @@
 import './Signin.css';
 import React,{useState} from "react";
 import axiosInstance from "../axiosApi";
+import axios from "axios"
 
 
 function Signin () {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    console.log("access_token :",localStorage.getItem('access_token'))
 
     const handleSubmit = () => {
-        // console.log(username)
-        // console.log(password)
-        alert("dfsdf")
-        let json = {
-            "username": username,
-            "password": password
-        }
-        console.log(json)
         try{
-            axiosInstance.post(`token/obtain`,json)
-            .then(response => {
+            axiosInstance.post(`token/obtain/`,
+            {
+                username: username,
+                password: password,
+            }
+            ).then(response=>{
+                console.log(response.data)
                 axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
             })
+            
         } catch(error){
             throw error
         }
     }
     return (
         <div className='page'>
+            <button onClick={handleSubmit}>lfsjdl</button>
             <div className='signin-box'>
                 <form onSubmit={handleSubmit}>
                     <div className='signin-header'>web/signin.</div>
                     <div className='signin-subbox' id='usrn'>
                         <label className='label'>Username:</label>
                         <input
-                            autocomplete='off'
+                            autoComplete='off'
                             className='input-authen'
                             type='text'
                             value = {username}

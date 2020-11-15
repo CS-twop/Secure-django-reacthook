@@ -117,8 +117,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000', # enable React app
+    'http://localhost:3000',# enable React app
 )
 
 # simple jwt setting, this is the default setting 
