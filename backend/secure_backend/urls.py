@@ -2,8 +2,8 @@ from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
 from .views import (UserCreate, UserList, \
-    PostCreate, PostList, PostUpdate, \
-    CommentCreate, CommentList, CommentUpdate)
+    PostCreate, PostList, PostUpdate, PostDelete, \
+    CommentCreate, CommentList, CommentUpdate, CommentDelete)
 
 urlpatterns = [
     # User 
@@ -11,6 +11,11 @@ urlpatterns = [
         'user/create/', 
         UserCreate.as_view(), 
         name='create_user'
+    ),
+    path( 
+        'users/',
+        UserList.as_view(),
+        name='user_list'
     ),
     # Post
     path(
@@ -28,6 +33,11 @@ urlpatterns = [
         PostList.as_view(),
         name='post_list'
     ),
+    path(
+        'post/delete/',
+        PostDelete.as_view(),
+        name='post_delete'
+    ),
     # Comment
     path(
         'comment/create/', 
@@ -43,6 +53,11 @@ urlpatterns = [
         'comment/update/',
         CommentUpdate.as_view(),
         name='comment update'
+    ),
+    path(
+        'comment/delete/',
+        CommentDelete.as_view(),
+        name='comment_delete'
     ),
     # Token 
     path(

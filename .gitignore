@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# django sqlite
+backend/secure_backend/db.sqlite
+
 # Distribution / packaging
 .Python
 env/

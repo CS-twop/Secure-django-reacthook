@@ -61,6 +61,3 @@ class CommentSerializer(ModelSerializer):
         instance = self.Meta.model(**data)
         instance.save()
         return instance 
-        
-    
-    
