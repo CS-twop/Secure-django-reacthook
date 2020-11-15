@@ -51,7 +51,7 @@ function Forum() {
     //get post
     // useEffect(() => {
     //     try{
-    //         axiosInstance.get(`post`)
+    //         axiosInstance.get(`posts`)
     //         .then(response => {
     //            setPosts(response.data)
     //         })

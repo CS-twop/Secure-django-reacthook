@@ -1,6 +1,19 @@
 import './WritePost.css';
+import axiosInstance from "../axiosApi";
+import React,{ useState } from 'react';
 
 function WritePost(props) {
+    const [post,setPost] = useState("")
+
+    const onClickPost = () => {
+        alert(post)    
+        // try{
+        //     axiosInstance.post(`post/create`)
+        // }catch (error){
+        //     throw error
+        // }
+    }
+
     return (
         <div className='write-post'>
             <div className='write-post-header'>
@@ -8,11 +21,11 @@ function WritePost(props) {
                     <div className='writer'>{props.user}</div>
                 </div>
                 <div className='write-post-btns'>
-                    <input className='post-btn' type='button' value='POST'></input>
+                    <input className='post-btn' type='button' onClick={onClickPost} value="post"></input>
                 </div>
             </div>
             <div className='write-post-context'>
-                <textarea className='write-post-box' rows='5' cols='95' ></textarea>
+                <textarea className='write-post-box' rows='5' cols='95' value={post} onChange={(e) => setPost(e.target.value)}></textarea>
             </div>
         </div>
     )
