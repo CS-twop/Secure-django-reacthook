@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import UserCreate, HelloWorldView, UserList, UserDetail, PostCreate, PostList
+from .views import UserCreate, HelloWorldView, UserList, UserDetail, PostCreate, PostList, CommentCreate, CommentList
+
 
 urlpatterns = [
     # User 
@@ -30,6 +31,17 @@ urlpatterns = [
         'posts/',
         PostList.as_view(),
         name='post_list'
+    ),
+    # Comment
+    path(
+        'comment/create/', 
+        CommentCreate.as_view(),
+        name='create_comment'
+    ),
+    path(
+        'comments/',
+        CommentList.as_view(),
+        name='comment_list'
     ),
     # Token 
     path(

@@ -4,18 +4,17 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
 
-from .models import Post
+from .models import Post, Comment
 
 class UserSerializer(ModelSerializer):
-    post = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
-
+    # posts = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Post.objects.all())
     email = serializers.EmailField(required=True)
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'post')
+        fields = ('email', 'username', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -27,22 +26,25 @@ class UserSerializer(ModelSerializer):
         return instance
 
 class PostSerializer(ModelSerializer):
-
+    # comments = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Comment.objects.all())
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Post
-        fields = ('content',)
-
+        fields = ('owner', 'content')
     def create(self, data):
-        print(data)
-        owner_name = data.pop('owner', None)
-        # owner_id = User.objects.get(username=owner_name).id
         data['owner'] = self.context['request'].user
-        # ! ไม่ควรให่้คนอื่นมาปลอมแปลง มาคอมเมนท์แทนด้วย 
         instance = self.Meta.model(**data)
         instance.save()
         return instance
         
-
-
-
-    
+class CommentSerializer(ModelSerializer):
+    commenter = serializers.ReadOnlyField(source="commenter.username")
+    class Meta: 
+        model = Comment 
+        fields = ("post_parent", 'commenter', 'content')
+    def create(self, data):
+        data['commenter'] = self.context['request'].user
+        instance = self.Meta.model(**data)
+        instance.save()
+        return instance 
+        
