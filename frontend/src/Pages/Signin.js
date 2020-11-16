@@ -24,7 +24,7 @@ function Signin() {
                 }
             ).then(response => {
                 console.log(response.data)
-                axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+                axiosInstance.defaults.headers['Authorization'] = "Bearer " + response.data.access;
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
                 localStorage.setItem('username', username);

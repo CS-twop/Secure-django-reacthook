@@ -9,7 +9,12 @@ const axiosInstance = axios.create({
         'Authorization': localStorage.getItem('access_token') ? "Bearer " + localStorage.getItem('access_token') : null,
         'Content-Type': 'application/json',
         'accept': 'application/json',
-        // 'Access-Control-Allow-Origin': 'http://localhost:3000',
+        // "X-Frame-Options": "DENY",//clickjacking
+        // "X-XSS-Protection": "1;mode=block", //crossite
+        // "Access-Control-Allow-Headers": "Accept",
+        // X-XSS-Protection: 1; mode=block
+        // "Referrer-Policy": "no-referrer",
+        // 'Access-Control-Allow-Origin': '*',
         // 'Access-Control-Allow-Methods': "GET,POST",
         // "Access-Control-Allow-Headers": "content-type",
         // "Access-Control-Allow-Credentials": "true"

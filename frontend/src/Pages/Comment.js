@@ -1,5 +1,6 @@
 import './Comment.css';
 import React, { useState , useEffect } from 'react';
+import {useHistory} from "react-router-dom"
 
 function Comment(props) {
     const [checkUser,setCheckUser] = useState(false)
@@ -19,6 +20,7 @@ function Comment(props) {
     function handleDone(){
         setCheckEdit(false)
     }
+
 
     return (
         <div className='comment'>
