@@ -5,8 +5,7 @@ import React,{ useState } from 'react';
 function WritePost(props) {
     const [post,setPost] = useState("")
 
-    const onClickPost = () => {
-        alert(post)    
+    const onClickPost = () => {  
         try{
             axiosInstance.post(`post/create/`,
             {

@@ -10,7 +10,6 @@ function WriteComment(props) {
     const history = useHistory();
 
     const onClickComment = () => {
-        // console.log(comment,id)
         try{
             axiosInstance.post(`comment/create/`,{
                 content:comment,

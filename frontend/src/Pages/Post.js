@@ -32,17 +32,16 @@ function Post(props) {
         }).then(response => {
             window.location.reload()
         })
-        // console.log(content)
+
     }
 
     function handleDelete(){
-        console.log(props.id)
         axiosInstance.delete('post/delete/',
-        {
-            post_id: props.id,
+        {data:  {
+                    post_id: props.id,
+                }
         }).then(response => {
-            console.log("delete")
-            // window.location.reload()
+            window.location.reload()
         })
     }
 
@@ -65,7 +64,7 @@ function Post(props) {
             <div className='line'></div>
             <div className='comment-part'>
                 <WriteComment user={props.user} id={props.id}/>
-                {props.comments.length !== "0" ? props.comments.map(comment => (<Comment user={props.user} commenter={comment.user} content={comment.content}/>)) : null}
+                {props.comments.length !== "0" ? props.comments.map(comment => (<Comment user={props.user} post_id={props.id} comment_id={comment.id} commenter={comment.user} content={comment.content}/>)) : null}
             </div>
         </div>
     )
