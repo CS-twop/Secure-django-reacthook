@@ -32,9 +32,9 @@ class CommentSerializer(ModelSerializer):
     
     class Meta: 
         model = Comment 
-        fields = ("post_id", 'user', 'content')
+        fields = ("id", "post_id", 'user', 'content')
         extra_kwargs = {
-            'post_id': {'write_only': True},
+            "post_id": {"write_only": True}
         }
 
     def create(self, data):
@@ -51,7 +51,7 @@ class PostSerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('user', 'content', 'post_comments')
+        fields = ('id','user', 'content', 'post_comments')
 
     def create(self, data):
         data['user'] = self.context['request'].user
