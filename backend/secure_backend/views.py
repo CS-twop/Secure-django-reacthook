@@ -82,7 +82,10 @@ class PostUpdate(generics.UpdateAPIView):
         return obj
         
     def patch(self, request, *args, **kwargs):
-        obj = self.get_object()
+        try:
+            obj = self.get_object()
+        except:
+            return Response("Post does not exist",status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         serializer = PostSerializer(obj,data=request.data,partial=True)
         if serializer.is_valid(): 
             post = serializer.save()
@@ -148,7 +151,13 @@ class CommentUpdate(generics.UpdateAPIView):
         return obj
 
     def patch(self, request, *args, **kwargs):
-        obj = self.get_object()
+        try:
+            obj = self.get_object()
+        except:
+            return Response(
+                "Comment does not exist", 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
         serializer = CommentSerializer(obj,data=request.data,partial=True)
         if serializer.is_valid():
             comment = serializer.save()
