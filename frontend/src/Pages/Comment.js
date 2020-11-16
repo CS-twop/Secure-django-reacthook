@@ -31,7 +31,7 @@ function Comment(props) {
                 <div className='comment-btns'>
                         {(checkUser && !checkEdit) ? <input className='edit-comment-btn' type='button' value='EDIT' onClick={handleEdit}></input>:null}
                         {(checkUser && checkEdit) ? <input className='done-comment-btn' type='button' value='DONE' onClick={handleDone}></input>:null}
-                        {checkUser ? <input className='delete-comment-btn' type='button' value='DELETE'></input>:null}
+                        {checkUser ? <input className='delete-comment-btn' type='button' value='DELETE' onClick={handleDelete}></input>:null}
                 </div>
             </div>  
             <div className='content' >

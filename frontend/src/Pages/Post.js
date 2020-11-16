@@ -35,6 +35,17 @@ function Post(props) {
         // console.log(content)
     }
 
+    function handleDelete(){
+        console.log(props.id)
+        axiosInstance.delete('post/delete/',
+        {
+            post_id: props.id,
+        }).then(response => {
+            console.log("delete")
+            // window.location.reload()
+        })
+    }
+
     return (
         <div className='post'>
             <div className='post-header'>
@@ -44,7 +55,7 @@ function Post(props) {
                 <div className='post-btns'>
                     {(checkUser && !checkEdit) ? <input className='edit-btn' type='button' value='EDIT' onClick={handleEdit}></input>: null}
                     {(checkUser && checkEdit) ? <input className='done-btn' type='button' value='DONE' onClick={handleDone}></input>: null}
-                    {checkUser ? <input className='delete-btn' type='button' value='DELETE'></input>: null}
+                    {checkUser ? <input className='delete-btn' type='button' value='DELETE' onClick={handleDelete}></input>: null}
                 </div>
             </div>
             <div className='post-context'>
