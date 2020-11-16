@@ -10,6 +10,7 @@ function Post(props) {
     const [checkUser,setCheckUser] = useState(false)
     const [checkEdit,setCheckEdit] = useState(false)
     const [content,setContent] = useState(props.content)
+    const {id} = props
 
     useEffect(() => {
         if(props.user === props.poster)
@@ -28,7 +29,7 @@ function Post(props) {
         axiosInstance.patch('post/update/',
         {
             content:content,
-            post_id: props.id
+            post_id: id
         }).then(response => {
             window.location.reload()
         })
@@ -36,11 +37,13 @@ function Post(props) {
     }
 
     function handleDelete(){
-        console.log(props.id)
-        axiosInstance.delete('post/delete/',
-        {
-            post_id: props.id,
-        }).then(response => {
+        console.log(id)
+        axiosInstance.delete('post/delete/',{data:
+            {
+                post_id: id,
+            }
+        }
+        ).then(response => {
             console.log("delete")
             // window.location.reload()
         })
