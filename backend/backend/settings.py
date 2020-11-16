@@ -11,15 +11,14 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import environ 
+# import environ 
 from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = environ.Path(__file__) - 3
-print(BASE_DIR)
-env = environ.Env() 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# BASE_DIR = environ.Path(__file__) - 2
+# env = environ.Env() 
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -27,7 +26,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '2!0^1dgmu0@ho%aak3q^@ctu=w$3(88r42)5b1hikq-hm0ana='
 # SECRET_KEY = env.str('SECRET_KEY')
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -98,14 +97,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('DB_NAME'),
-        'USER': env.str('DB_USER'),
-        'PASSWORD': env.str('DB_PASSWORD'),
-        'HOST': env.str('DB_HOST'),
+        'NAME': os.environ['POSTGRES_DB'],
+        'USER': os.environ['POSTGRES_USER'],
+        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
         'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require'
-        }
+        # 'OPTIONS': {
+        #     'sslmode': 'require'
+        # }
     },
 }
 
