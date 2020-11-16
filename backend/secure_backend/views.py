@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
-from .permissions import IsPostOwnerOrAdmin, IsCommenterOrAdmin
+from .permissions import IsOwnerOrAdmin
 
 #######################################
 ############### USER ##################
@@ -47,8 +47,9 @@ class PostList(generics.ListAPIView):
     """ 
             Create api endpoint for displaying all posts, anyone is allowed to see
     """
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer 
+    permissions = (IsAuthenticated, )
+    queryset = Post.objects.all().prefetch_related('comments')
+    serializer_class = PostSerializer
 
 class PostCreate(APIView):
     """
@@ -72,7 +73,7 @@ class PostUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating post, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     serializer_class = PostSerializer
     
     def get_object(self):
@@ -81,7 +82,10 @@ class PostUpdate(generics.UpdateAPIView):
         return obj
         
     def patch(self, request, *args, **kwargs):
-        obj = self.get_object()
+        try:
+            obj = self.get_object()
+        except:
+            return Response("Post does not exist",status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         serializer = PostSerializer(obj,data=request.data,partial=True)
         if serializer.is_valid(): 
             post = serializer.save()
@@ -94,7 +98,7 @@ class PostDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting post, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsPostOwnerOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     
     def get_queryset(self):
         posts = Post.objects.filter(id=self.request.data['post_id'])
@@ -138,7 +142,7 @@ class CommentUpdate(generics.UpdateAPIView):
     """
             Update api endpoint for updating comment, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     serializer_class = CommentSerializer
     
     def get_object(self):
@@ -147,7 +151,13 @@ class CommentUpdate(generics.UpdateAPIView):
         return obj
 
     def patch(self, request, *args, **kwargs):
-        obj = self.get_object()
+        try:
+            obj = self.get_object()
+        except:
+            return Response(
+                "Comment does not exist", 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
         serializer = CommentSerializer(obj,data=request.data,partial=True)
         if serializer.is_valid():
             comment = serializer.save()
@@ -160,7 +170,7 @@ class CommentDelete(generics.DestroyAPIView):
     """
             Delete api endpoint for deleting comment, authentication is needed.
     """
-    permission_classes = [IsAuthenticated, IsCommenterOrAdmin]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
     
     def get_queryset(self):
         comments = Comment.objects.filter(id=self.request.data['comment_id']) 
