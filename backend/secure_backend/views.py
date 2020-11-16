@@ -47,8 +47,9 @@ class PostList(generics.ListAPIView):
     """ 
             Create api endpoint for displaying all posts, anyone is allowed to see
     """
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer 
+    permissions = (IsAuthenticated, )
+    queryset = Post.objects.all().prefetch_related('comments')
+    serializer_class = PostSerializer
 
 class PostCreate(APIView):
     """

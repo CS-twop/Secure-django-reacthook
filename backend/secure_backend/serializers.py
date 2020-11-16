@@ -15,7 +15,9 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -25,17 +27,38 @@ class UserSerializer(ModelSerializer):
         instance.save()
         return instance
 
+class CommentSerializer(ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.username")
+    
+    class Meta: 
+        model = Comment 
+        fields = ("post_id", 'user', 'content')
+        extra_kwargs = {
+            'post_id': {'write_only': True},
+        }
+
+    def create(self, data):
+        data['user'] = self.context['request'].user
+        instance = self.Meta.model(**data)
+        instance.save()
+        return instance 
+
 class PostSerializer(ModelSerializer):
-    # comments = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Comment.objects.all())
+
     user = serializers.ReadOnlyField(source='user.username')
+    post_comments = CommentSerializer(source='comments', many=True,
+                                      read_only=True)
+
     class Meta:
         model = Post
-        fields = ('user', 'content')
+        fields = ('user', 'content', 'post_comments')
+
     def create(self, data):
         data['user'] = self.context['request'].user
         instance = self.Meta.model(**data)
         instance.save()
         return instance
+
     def update(self, instance, validated_data):
         """
             Update post
@@ -51,13 +74,3 @@ class PostSerializer(ModelSerializer):
         instance.save()
         return instance
         
-class CommentSerializer(ModelSerializer):
-    user = serializers.ReadOnlyField(source="user.username")
-    class Meta: 
-        model = Comment 
-        fields = ("post_id", 'user', 'content')
-    def create(self, data):
-        data['user'] = self.context['request'].user
-        instance = self.Meta.model(**data)
-        instance.save()
-        return instance 
