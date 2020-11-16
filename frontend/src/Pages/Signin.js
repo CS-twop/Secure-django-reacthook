@@ -1,7 +1,6 @@
 import './Signin.css';
 import React, { useState } from "react";
 import axiosInstance from "../axiosApi";
-// import axios from "axios"
 import {useHistory} from "react-router-dom"
 import { useDispatch } from "react-redux";
 import {loginSuccess} from "../actions/userActions"
@@ -22,16 +21,27 @@ function Signin() {
                     username: xss(username),
                     password: xss(password),
                 }
-            ).then(response => {
-                console.log(response.data)
+            )
+            .then(response => {
+                // console.log(response)
                 axiosInstance.defaults.headers['Authorization'] = "Bearer " + response.data.access;
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
                 localStorage.setItem('username', username);
                 dispatch(loginSuccess({user:username}));
                 history.push("/forum")
+                return response
+            })
+            .catch((err)=>{
+                // console.log(err)
+                if(err.response.status === 401){
+                    // console.log("err")
+                    alert("your password is wrong")
+                    return;
+                }
             })
         } catch (error) {
+            // if(error.status === "401")alert("your password is wrong")
             throw error
         }
     }

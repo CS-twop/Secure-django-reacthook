@@ -2,12 +2,14 @@ import './Post.css';
 import Comment from './Comment';
 import WriteComment from './WriteComment'; 
 import React, { useState , useEffect } from 'react';
+import axiosInstance from "../axiosApi";
 
 
 
 function Post(props) {
     const [checkUser,setCheckUser] = useState(false)
     const [checkEdit,setCheckEdit] = useState(false)
+    const [content,setContent] = useState(props.content)
 
     useEffect(() => {
         if(props.user === props.poster)
@@ -23,6 +25,14 @@ function Post(props) {
 
     function handleDone(){
         setCheckEdit(false)
+        axiosInstance.patch('post/update/',
+        {
+            content:content,
+            post_id: props.id
+        }).then(response => {
+            window.location.reload()
+        })
+        // console.log(content)
     }
 
     return (
@@ -39,7 +49,7 @@ function Post(props) {
             </div>
             <div className='post-context'>
                 {!checkEdit ? <textarea className='post-box' rows='5' readOnly='true'>{props.content}</textarea>:null}
-                {(checkUser && checkEdit) ? <textarea className='edit-box' rows='5'>{props.content}</textarea>:null}
+                {(checkUser && checkEdit) ? <textarea className='edit-box' rows='5' value={content} onChange={(e) => setContent(e.target.value)}></textarea>:null}
             </div>
             <div className='line'></div>
             <div className='comment-part'>
