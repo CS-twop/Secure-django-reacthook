@@ -1,30 +1,36 @@
 import './Signin.css';
 import React, { useState } from "react";
 import axiosInstance from "../axiosApi";
-import axios from "axios"
+// import axios from "axios"
 import {useHistory} from "react-router-dom"
+import { useDispatch } from "react-redux";
+import {loginSuccess} from "../actions/userActions"
 
 function Signin() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch();
     const history = useHistory()
-    console.log("access_token :", localStorage.getItem('access_token'))
+    // console.log("access_token :", localStorage.getItem('access_token'))
+
+    var xss = require("xss")
 
     const handleClickSummit = () => {
         try {
             axiosInstance.post(`token/obtain/`,
                 {
-                    username: username,
-                    password: password,
+                    username: xss(username),
+                    password: xss(password),
                 }
             ).then(response => {
                 console.log(response.data)
                 axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
+                localStorage.setItem('username', username);
+                dispatch(loginSuccess({user:username}));
                 history.push("/forum")
             })
-
         } catch (error) {
             throw error
         }

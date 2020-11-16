@@ -1,14 +1,16 @@
 import Post from './Post';
 import WritePost from './WritePost';
 import './Forum.css';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axiosInstance from "../axiosApi";
 import {useHistory} from "react-router-dom"
+import { useSelector } from "react-redux";
 
 
 function Forum() {
     const history = useHistory()
-    const [user, setUser] = useState('Morpheus')
+    // const [user, setUser] = useState(localStorage.getItem("username"))
+    const {user}  = useSelector((state) => state.user)
     const [posts, setPosts] = useState(
         [
             { 
@@ -55,17 +57,18 @@ function Forum() {
         history.push("/signin")
     }
 
-    // get post
-    // useEffect(() => {
-    //     try{
-    //         axiosInstance.get(`posts`)
-    //         .then(response => {
-    //            setPosts(response.data)
-    //         })
-    //     } catch(error){
-    //         throw error
-    //     }
-    // },[])
+    // get posts
+    useEffect(() => {
+        try{
+            axiosInstance.get(`posts/`)
+            .then(response => {
+                // setPosts(response.data)
+                console.log("post :",response.data)
+            })
+        } catch(error){
+            throw error
+        }
+    },[])
 
 
     return (
