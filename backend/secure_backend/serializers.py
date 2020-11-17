@@ -1,22 +1,31 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
 
 from .models import Post, Comment
 
+class GroupSerializer(ModelSerializer):
+    name = serializers.CharField(read_only=True)
+    class Meta:
+        model = Group
+        fields = ('name', )
+        
+
 class UserSerializer(ModelSerializer):
     # posts = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Post.objects.all())
-    email = serializers.EmailField(required=True)
+    email = serializers.EmailField(required=True, write_only=True)
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
+    groups_ = GroupSerializer(source='groups', many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password')
+        fields = ('email', 'username', 'password', 'groups_', )
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'email': {'write_only': True}
         }
 
     def create(self, validated_data):
