@@ -200,5 +200,6 @@ class LogoutAndBlacklistRefreshToken(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
-        except:
+        except Exception as e:
+            # print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST) 
