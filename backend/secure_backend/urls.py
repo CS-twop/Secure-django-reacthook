@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import (UserCreate, UserList, UserGet, \
+from .views import (UserCreate, UserGet, \
     PostCreate, PostList, PostUpdate, PostDelete, \
     CommentCreate, CommentList, CommentUpdate, CommentDelete)
 

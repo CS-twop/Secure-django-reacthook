@@ -26,15 +26,6 @@ class UserGet(generics.RetrieveAPIView):
         user = request.user
         serializer = UserSerializer(request.user)        
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-
-class UserList(generics.ListAPIView):
-    """ 
-            Create api endpoint for displaying all users, authentication is needed
-    """
-    permissions = (permissions.IsAuthenticated, )
-    queryset = User.objects.all()
-    serializer_class = UserSerializer 
 
 class UserCreate(APIView):
     """

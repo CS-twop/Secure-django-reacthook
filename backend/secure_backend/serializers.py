@@ -7,14 +7,16 @@ from rest_framework.fields import CurrentUserDefault
 from .models import Post, Comment
 
 class GroupSerializer(ModelSerializer):
+
     name = serializers.CharField(read_only=True)
+    
     class Meta:
         model = Group
         fields = ('name', )
         
 
 class UserSerializer(ModelSerializer):
-    # posts = serializers.SlugRelatedField(many=True, slug_field='content', queryset=Post.objects.all())
+
     email = serializers.EmailField(required=True, write_only=True)
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
@@ -37,6 +39,7 @@ class UserSerializer(ModelSerializer):
         return instance
 
 class CommentSerializer(ModelSerializer):
+    
     user = serializers.ReadOnlyField(source="user.username")
     
     class Meta: 
