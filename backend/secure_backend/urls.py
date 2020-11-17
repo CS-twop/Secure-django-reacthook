@@ -1,9 +1,10 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import (UserCreate, UserList, UserGet, \
+from .views import (UserCreate, UserGet, \
     PostCreate, PostList, PostUpdate, PostDelete, \
-    CommentCreate, CommentList, CommentUpdate, CommentDelete)
+    CommentCreate, CommentUpdate, CommentDelete, \
+    LogoutAndBlacklistRefreshToken)
 
 urlpatterns = [
     # User 
@@ -44,11 +45,6 @@ urlpatterns = [
         CommentCreate.as_view(),
         name='create_comment'
     ),
-    path(
-        'comments/',
-        CommentList.as_view(),
-        name='comment_list'
-    ),
     path( 
         'comment/update/',
         CommentUpdate.as_view(),
@@ -69,5 +65,10 @@ urlpatterns = [
         'token/refresh/',
         jwt_views.TokenRefreshView.as_view(),
         name='token_refresh'
+    ),
+    path(
+        'token/blacklist/',
+        LogoutAndBlacklistRefreshToken.as_view(),
+        name='token_blacklist'
     )
 ]

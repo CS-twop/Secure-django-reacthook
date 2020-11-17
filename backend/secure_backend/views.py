@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import permissions, status
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.response import Response 
+from rest_framework import permissions, status, generics
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework.response import Response 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from django.contrib.auth.models import User
 
@@ -26,15 +26,7 @@ class UserGet(generics.RetrieveAPIView):
         user = request.user
         serializer = UserSerializer(request.user)        
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
-class UserList(generics.ListAPIView):
-    """ 
-            Create api endpoint for displaying all users, authentication is needed
-    """
-    permissions = (permissions.IsAuthenticated, )
-    queryset = User.objects.all()
-    serializer_class = UserSerializer 
 
 class UserCreate(APIView):
     """
@@ -127,10 +119,6 @@ class PostDelete(generics.DestroyAPIView):
 ############## COMMENT ################
 #######################################
 
-class CommentList(generics.ListAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-
 class CommentCreate(APIView):
     """
             Create api endpoint for creating comment object, authentication 
@@ -195,3 +183,22 @@ class CommentDelete(generics.DestroyAPIView):
         return Response(status=status.HTTP_202_ACCEPTED)
         
 
+#######################################
+############### TOKEN #################
+#######################################
+
+class LogoutAndBlacklistRefreshToken(APIView):
+    """
+        View endpoint for logging user out and blacklist refresh token
+    """
+
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request, format='json'):
+        try:
+            refresh_token = request.data['refresh_token']
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST) 
