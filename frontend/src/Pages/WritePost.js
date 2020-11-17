@@ -5,13 +5,20 @@ import React,{ useState } from 'react';
 function WritePost(props) {
     const [post,setPost] = useState("")
 
-    const onClickPost = () => {
-        alert(post)    
-        // try{
-        //     axiosInstance.post(`post/create`)
-        // }catch (error){
-        //     throw error
-        // }
+    const onClickPost = () => {  
+        try{
+            axiosInstance.post(`post/create/`,
+            {
+                content: post
+            }
+            )
+                .then(response => {
+                    // console.log(response.data)
+                    window.location.reload()
+                })
+        }catch (error){
+            throw error
+        }
     }
 
     return (

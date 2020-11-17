@@ -2,12 +2,15 @@ import './Post.css';
 import Comment from './Comment';
 import WriteComment from './WriteComment'; 
 import React, { useState , useEffect } from 'react';
+import axiosInstance from "../axiosApi";
 
 
 
 function Post(props) {
     const [checkUser,setCheckUser] = useState(false)
     const [checkEdit,setCheckEdit] = useState(false)
+    const [content,setContent] = useState(props.content)
+    const {id} = props
 
     useEffect(() => {
         if(props.user === props.poster)
@@ -23,6 +26,25 @@ function Post(props) {
 
     function handleDone(){
         setCheckEdit(false)
+        axiosInstance.patch('post/update/',
+        {
+            content:content,
+            post_id: id
+        }).then(response => {
+            window.location.reload()
+        })
+
+    }
+
+    function handleDelete(){
+        axiosInstance.delete('post/delete/',
+        {data:  {
+                    post_id: props.id,
+                }
+        }).then(response => {
+            window.location.reload()
+
+        })
     }
 
     return (
@@ -34,19 +56,18 @@ function Post(props) {
                 <div className='post-btns'>
                     {(checkUser && !checkEdit) ? <input className='edit-btn' type='button' value='EDIT' onClick={handleEdit}></input>: null}
                     {(checkUser && checkEdit) ? <input className='done-btn' type='button' value='DONE' onClick={handleDone}></input>: null}
-                    {checkUser ? <input className='delete-btn' type='button' value='DELETE'></input>: null}
+                    {checkUser ? <input className='delete-btn' type='button' value='DELETE' onClick={handleDelete}></input>: null}
                 </div>
             </div>
             <div className='post-context'>
                 {!checkEdit ? <textarea className='post-box' rows='5' readOnly='true'>{props.content}</textarea>:null}
-                {(checkUser && checkEdit) ? <textarea className='edit-box' rows='5'>{props.content}</textarea>:null}
+                {(checkUser && checkEdit) ? <textarea className='edit-box' rows='5' value={content} onChange={(e) => setContent(e.target.value)}></textarea>:null}
             </div>
             <div className='line'></div>
             <div className='comment-part'>
-                <WriteComment user={props.user}/>
-                {props.comments.map(comment => (<Comment user={props.user} commenter={comment.commenter} content={comment.content}/>))}
+                <WriteComment user={props.user} id={props.id}/>
+                {props.comments.length !== "0" ? props.comments.map(comment => (<Comment user={props.user} post_id={props.id} comment_id={comment.id} commenter={comment.user} content={comment.content}/>)) : null}
             </div>
-            
         </div>
     )
 }

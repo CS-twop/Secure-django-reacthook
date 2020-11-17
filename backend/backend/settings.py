@@ -117,8 +117,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000', # enable React app
+    'http://localhost:3000',# enable React app
 )
 
 # simple jwt setting, this is the default setting 
@@ -148,6 +150,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+SECURE_BROWSER_XSS_FILTER = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
