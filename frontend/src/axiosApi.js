@@ -33,7 +33,9 @@ axiosInstance.interceptors.response.use(
 
         // Prevent infinite loops
         if (error.response.status === 401 && originalRequest.url === baseURL+'token/refresh/') {
-            window.location.href = '/signin/';
+            cookies.remove("access_token")
+            cookies.remove("refresh_token")
+            window.location.href = '/signin';
             return Promise.reject(error);
         }
 
@@ -59,7 +61,7 @@ axiosInstance.interceptors.response.use(
                             // localStorage.setItem('access_token', response.data.access);
                             // localStorage.setItem('refresh_token', response.data.refresh);
                             cookies.set('access_token', response.data.access)
-                            cookies.set('refresh_token', response.data.refresh)
+                            // cookies.set('refresh_token', response.data.refresh)
             
                             axiosInstance.defaults.headers['Authorization'] = "Bearer " + response.data.access;
                             originalRequest.headers['Authorization'] = "Bearer " + response.data.access;
@@ -71,11 +73,15 @@ axiosInstance.interceptors.response.use(
                         });
                     }else{
                         console.log("Refresh token is expired", tokenParts.exp, now);
-                        window.location.href = '/signin/';
+                        cookies.remove("access_token")
+                        cookies.remove("refresh_token")
+                        window.location.href = '/signin';
                     }
                 }else{
                     console.log("Refresh token not available.")
-                    window.location.href = '/signin/';
+                    cookies.remove("access_token")
+                    cookies.remove("refresh_token")
+                    window.location.href = '/signin';
                 }
         }
       
