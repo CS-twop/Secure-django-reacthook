@@ -7,8 +7,8 @@ services:
     container_name: db
     env_file:
       - ./backend/.env
-    networks: 
-      - backend-net
+    # networks: 
+    #   - backend-net
 
   backend:
     container_name: backend
@@ -22,9 +22,11 @@ services:
       - db 
     links:
       - db:db
-    networks: 
-      - frontend-net
-      - backend-net
+    ports: 
+      - '8000:8000'
+    # networks: 
+    #   - frontend-net
+    #   - backend-net
 
   frontend: 
     container_name: frontend 
@@ -33,9 +35,9 @@ services:
       - ./frontend:/usr/src/app/
     ports: 
       - '3000:3000'
-    networks: 
-      - frontend-net
+    # networks: 
+    #   - frontend-net
 
-networks: 
-  frontend-net: {}
-  backend-net: {}
+# networks: 
+#   frontend-net: {}
+#   backend-net: {}
