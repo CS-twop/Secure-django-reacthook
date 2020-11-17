@@ -122,7 +122,9 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',# enable React app
-    'http://frontend:3000'
+    'http://frontend:3000',
+    # 'http://localhost:80',
+    # 'http://secure_nginx:80',
 )
 
 # simple jwt setting, this is the default setting 

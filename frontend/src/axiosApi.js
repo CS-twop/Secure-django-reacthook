@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const baseURL = 'http://localhost:8000/api/'
+const baseURL = 'http://localhost:80/api/'
 
 const axiosInstance = axios.create({
     baseURL: baseURL,

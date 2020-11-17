@@ -16,7 +16,7 @@ function Forum() {
 
     const onClickSignOut = () => {
         // localStorage.clear()
-        console.log(cookies.get("refresh_token"))
+        // console.log(cookies.get("refresh_token"))
         axiosInstance.post('token/blacklist/',{
             refresh_token: cookies.get("refresh_token")
         }).then(response => {
