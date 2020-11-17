@@ -1,0 +1,78 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "moderator",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "user",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$ODAP1Czansqd$TtiQ6DTZQBVTtdMHBJA3AJPDb/WOT4lkFllbpS5UADU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "testoman",
+            "first_name": "",
+            "last_name": "",
+            "email": "testo@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-11-17T09:26:40Z",
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$XnNONMlx9sCo$rbgZQQykCUP/CeuFb/YLkxgCB+aPrcVabAPn2zENfC8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "modkun",
+            "first_name": "",
+            "last_name": "",
+            "email": "modsan@mod.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-11-17T09:27:23Z",
+            "groups": [
+                1
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$o7hLOHVswDpy$kuc60tccCvBnZsS27ynz+SC/IuvkR1L2a8X08H7iOg4=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "testoboi",
+            "first_name": "",
+            "last_name": "",
+            "email": "tboy@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-11-17T09:28:09Z",
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    }
+]
