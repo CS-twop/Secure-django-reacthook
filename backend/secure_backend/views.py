@@ -17,6 +17,17 @@ from .permissions import IsOwnerOrAdmin, IsModerator, IsUserOrModerator
 ############### USER ##################
 #######################################
 
+
+class UserGet(generics.RetrieveAPIView):
+    
+    permissions = (IsAuthenticated, )
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserSerializer(request.user)        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 class UserList(generics.ListAPIView):
     """ 
             Create api endpoint for displaying all users, authentication is needed
