@@ -15,7 +15,6 @@ import environ
 from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = environ.Path(__file__) - 2
 env = environ.Env() 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -25,13 +24,11 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str('SECRET_KEY')
-# SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
-
 
 # Application definition
 
@@ -82,39 +79,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'NAME': os.environ.get('POSTGRES_DB'),
-        #'USER': os.environ.get('POSTGRES_USER'),
-        #'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        #'HOST': os.environ.get('DB_HOST'),
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env.str('POSTGRES_DB'),
         'USER': env.str('POSTGRES_USER'),
         'PASSWORD': env.str('POSTGRES_PASSWORD'),
         'HOST': env.str('DB_HOST'),
         'PORT': '5432',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'postgres',
-        # 'USER': 'postgres', 
-        # 'PASSWORD': 'postgres123',
-        # 'HOST': 'db',
-        # 'PORT': '5432',
-        # 'OPTIONS': {
-        #     'sslmode': 'require'
-        # }
     },
 }
 
