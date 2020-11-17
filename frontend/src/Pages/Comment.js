@@ -11,6 +11,8 @@ function Comment(props) {
     useEffect(() => {
         if(props.user === props.commenter)
             setCheckUser(true)
+        else if(props.role === "moderator")
+            setCheckUser(true)
         else
             setCheckUser(false)
     },[props.user, props.commenter])
@@ -27,7 +29,7 @@ function Comment(props) {
             content: content,
             comment_id: props.comment_id
         }).then(response => {
-            if(response.status == "202"){
+            if(response.status == "200"){
                 window.location.reload()
             }
             return response

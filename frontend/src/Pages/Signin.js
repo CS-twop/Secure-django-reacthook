@@ -33,7 +33,7 @@ function Signin() {
                     // localStorage.setItem('username', username);
                     cookies.set('access_token', response.data.access)
                     cookies.set('refresh_token', response.data.refresh)
-                    cookies.set('username', username)
+                    // cookies.set('username', username)
                     dispatch(loginSuccess({user:username}));
                     history.push("/forum")
                 }

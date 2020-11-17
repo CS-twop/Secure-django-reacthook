@@ -14,14 +14,15 @@ function Forum() {
     const dispatch = useDispatch();
     const cookies = new Cookies()
     // const [user, setUser] = useState(localStorage.getItem("username"))
-    const [user, setUser] = useState(cookies.get("username"))
+    const [user, setUser] = useState()
+    const [role, setRole] = useState()
     const [posts, setPosts] = useState([])
 
     const onClickSignOut = () => {
         // localStorage.clear()
         cookies.remove("access_token")
         cookies.remove("refresh_token")
-        cookies.remove("username")
+        // cookies.remove("username")
         dispatch(logout());
         history.push("/signin")
     }
@@ -39,18 +40,20 @@ function Forum() {
         }
     },[])
 
-    // useEffect(() => {
-    //     try{
-    //         axiosInstance.get(`user/`)
-    //         .then(response => {
-    //             setUser(response.data.userneme)
-    //         })
-    //     } catch(err){
-    //         throw err
-    //     }
-    // },[])
+    useEffect(() => {
+        try{
+            axiosInstance.get(`user/`)
+            .then(response => {
+                console.log("setUser")
+                setUser(response.data.username)
+                setRole(response.data.groups_[0].name)
+            })
+        } catch(err){
+            throw err
+        }
+    },[])
 
-    // console.log("link",posts)
+    console.log(user,"----",role)
 
     return (
         <div className='forum-page'>
@@ -62,7 +65,7 @@ function Forum() {
             </div>
             <div className='forum-posts'>
                 <WritePost user={user} />
-                {posts.map(post => (<Post user={user} poster={post.user} content={post.content} comments={post.post_comments} id={post.id} />))}
+                {posts.map(post => (<Post user={user} poster={post.user} role={role} content={post.content} comments={post.post_comments} id={post.id} />))}
             </div>
         </div>
     );
