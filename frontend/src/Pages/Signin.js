@@ -12,14 +12,14 @@ function Signin() {
     const history = useHistory()
     // console.log("access_token :", localStorage.getItem('access_token'))
 
-    var xss = require("xss")
+    // var xss = require("xss")
 
     const handleClickSummit = () => {
         try {
             axiosInstance.post(`token/obtain/`,
                 {
-                    username: xss(username),
-                    password: xss(password),
+                    username: username,
+                    password: password,
                 }
             )
             .then(response => {
