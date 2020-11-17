@@ -9,7 +9,7 @@ def _is_in_group(user, group_name):
     try: 
         return Group.objects.get(name=group_name).user_set \
                                                  .filter(id=user.id) \
-                                                 .exist()
+                                                 .exists()
     except:
         return None
 
@@ -60,14 +60,14 @@ class IsOwnerOrAdmin(permissions.BasePermission):
         if request.user.is_superuser:
             return True
         if _is_in_group(request.user, "moderator"):
+            # print(request.user.id)
             return True
         try: 
             user = User.objects.get(pk=obj.user.id) 
         except: 
             return False 
 
-        if request.user.id == user.id:
+        if request.user.id == user.id and _is_in_group(request.user, "user"):
             return True
 
         return False
-        
