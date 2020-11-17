@@ -39,6 +39,17 @@ function Forum() {
         }
     },[])
 
+    // useEffect(() => {
+    //     try{
+    //         axiosInstance.get(`user/`)
+    //         .then(response => {
+    //             setUser(response.data.userneme)
+    //         })
+    //     } catch(err){
+    //         throw err
+    //     }
+    // },[])
+
     // console.log("link",posts)
 
     return (
