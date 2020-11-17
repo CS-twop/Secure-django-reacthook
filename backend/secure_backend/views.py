@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .models import Post, Comment
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
-from .permissions import IsOwnerOrAdmin
+from .permissions import IsOwnerOrAdmin, IsModerator, IsUserOrModerator
 
 #######################################
 ############### USER ##################
