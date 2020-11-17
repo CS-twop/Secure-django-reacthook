@@ -27,7 +27,7 @@ function Forum() {
         try{
             axiosInstance.get(`posts/`)
             .then(response => {
-                console.log("post :",response.data)
+                // console.log("post :",response.data)
                 setPosts(response.data)
             })
         } catch(error){
@@ -39,7 +39,7 @@ function Forum() {
         try{
             axiosInstance.get(`user/`)
             .then(response => {
-                console.log("setUser")
+                // console.log("setUser")
                 setUser(response.data.username)
                 setRole(response.data.groups_[0].name)
             })
@@ -48,7 +48,7 @@ function Forum() {
         }
     },[])
 
-    console.log(user,"----",role)
+    // console.log(user,"----",role)
 
     return (
         <div className='forum-page'>

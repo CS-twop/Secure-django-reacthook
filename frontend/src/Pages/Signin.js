@@ -36,7 +36,7 @@ function Signin() {
                 return response
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
                 if(err.response.status === 401){
                     // console.log("err")
                     alert("your password is wrong")
