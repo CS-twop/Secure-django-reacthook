@@ -3,7 +3,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 from .views import (UserCreate, UserGet, \
     PostCreate, PostList, PostUpdate, PostDelete, \
-    CommentCreate, CommentList, CommentUpdate, CommentDelete)
+    CommentCreate, CommentList, CommentUpdate, CommentDelete, \
+    LogoutAndBlacklistRefreshToken)
 
 urlpatterns = [
     # User 
@@ -69,5 +70,10 @@ urlpatterns = [
         'token/refresh/',
         jwt_views.TokenRefreshView.as_view(),
         name='token_refresh'
+    ),
+    path(
+        'token/blacklist/',
+        LogoutAndBlacklistRefreshToken.as_view(),
+        name='token_blacklist'
     )
 ]
