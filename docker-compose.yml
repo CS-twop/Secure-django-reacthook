@@ -1,27 +1,26 @@
-version: '2'
+version: '3.7'
 
 services:
   db: 
+    restart: always
     image: postgres
     container_name: db
-    # volumes: 
-    #   - ./db/postgres_data:/var/lib/postgresql/data
     env_file:
       - ./backend/.env
-    # ports: 
-    #   - '5432:5432'
+    ports:
+      - '5432:5432'
 
   backend:
-    build: ./backend
     container_name: backend
-    env_file:
-      - ./backend/.env
+    build: ./backend
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes: 
-      - ./backend:/code
+      - ./backend:/usr/src/backend/
     ports:
       - '8000:8000'
+    env_file: 
+      - ./backend/.env
     depends_on:
       - db 
-
-# volumes:
-#   postgres_data:
+    links:
+      - db:db
