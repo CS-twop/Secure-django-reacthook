@@ -15,6 +15,8 @@ function Post(props) {
     useEffect(() => {
         if(props.user === props.poster)
             setCheckUser(true)
+        else if(props.role === "moderator")
+            setCheckUser(true)
         else
             setCheckUser(false)
     },[props.user, props.poster])
@@ -31,7 +33,14 @@ function Post(props) {
             content:content,
             post_id: id
         }).then(response => {
-            window.location.reload()
+            if(response.status == "200"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 500){
+                alert("ซนนะมึง")
+            }
         })
 
     }
@@ -42,8 +51,14 @@ function Post(props) {
                     post_id: props.id,
                 }
         }).then(response => {
-            window.location.reload()
-
+            if(response.status == "202"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 403){
+                alert("ซนนะมึง")
+            }
         })
     }
 
@@ -66,7 +81,7 @@ function Post(props) {
             <div className='line'></div>
             <div className='comment-part'>
                 <WriteComment user={props.user} id={props.id}/>
-                {props.comments.length !== "0" ? props.comments.map(comment => (<Comment user={props.user} post_id={props.id} comment_id={comment.id} commenter={comment.user} content={comment.content}/>)) : null}
+                {props.comments.length !== "0" ? props.comments.map(comment => (<Comment user={props.user} role={props.role} post_id={props.id} comment_id={comment.id} commenter={comment.user} content={comment.content}/>)) : null}
             </div>
         </div>
     )
