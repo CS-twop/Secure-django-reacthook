@@ -15,8 +15,9 @@ function Post(props) {
     useEffect(() => {
         if(props.user === props.poster)
             setCheckUser(true)
-        else if(props.role === "moderator")
+        else if(props.role === "moderator") {
             setCheckUser(true)
+        }
         else
             setCheckUser(false)
     },[props.user, props.poster])

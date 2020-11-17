@@ -3,13 +3,10 @@ import React, { useState } from "react";
 import axiosInstance from "../axiosApi";
 import Cookies from 'universal-cookie';
 import {useHistory} from "react-router-dom"
-import { useDispatch } from "react-redux";
-import {loginSuccess} from "../actions/userActions"
 
 function Signin() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const dispatch = useDispatch();
     const history = useHistory()
     const cookies = new Cookies();
     // console.log("access_token :", localStorage.getItem('access_token'))
@@ -34,7 +31,6 @@ function Signin() {
                     cookies.set('access_token', response.data.access)
                     cookies.set('refresh_token', response.data.refresh)
                     // cookies.set('username', username)
-                    dispatch(loginSuccess({user:username}));
                     history.push("/forum")
                 }
                 return response
