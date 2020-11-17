@@ -1,4 +1,7 @@
 import axios from 'axios'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const baseURL = 'http://localhost:8000/api/'
 
@@ -6,7 +9,8 @@ const axiosInstance = axios.create({
     baseURL: baseURL,
     timeout: 5000,
     headers: {
-        'Authorization': localStorage.getItem('access_token') ? "Bearer " + localStorage.getItem('access_token') : null,
+        // 'Authorization': localStorage.getItem('access_token') ? "Bearer " + localStorage.getItem('access_token') : null,
+        'Authorization': cookies.get('access_token') ? "Bearer " + cookies.get('access_token') : null,
         'Content-Type': 'application/json',
         'accept': 'application/json',
         // "X-Frame-Options": "DENY",//clickjacking
@@ -37,7 +41,8 @@ axiosInstance.interceptors.response.use(
             error.response.status === 401 && 
             error.response.statusText === "Unauthorized") 
             {
-                const refreshToken = localStorage.getItem('refresh_token');
+                // const refreshToken = localStorage.getItem('refresh_token');
+                const refreshToken = cookies.get('refresh_token');
 
                 if (refreshToken){
                     const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
@@ -51,11 +56,13 @@ axiosInstance.interceptors.response.use(
                         .post('/token/refresh/', {refresh: refreshToken})
                         .then((response) => {
             
-                            localStorage.setItem('access_token', response.data.access);
-                            localStorage.setItem('refresh_token', response.data.refresh);
+                            // localStorage.setItem('access_token', response.data.access);
+                            // localStorage.setItem('refresh_token', response.data.refresh);
+                            cookies.set('access_token', response.data.access)
+                            cookies.set('refresh_token', response.data.refresh)
             
-                            axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
-                            originalRequest.headers['Authorization'] = "JWT " + response.data.access;
+                            axiosInstance.defaults.headers['Authorization'] = "Bearer " + response.data.access;
+                            originalRequest.headers['Authorization'] = "Bearer " + response.data.access;
             
                             return axiosInstance(originalRequest);
                         })

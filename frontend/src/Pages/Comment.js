@@ -27,7 +27,14 @@ function Comment(props) {
             content: content,
             comment_id: props.comment_id
         }).then(response => {
-            window.location.reload()
+            if(response.status == "202"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 500){
+                alert("ซนนะมึง")
+            }
         })
     }
 
@@ -37,7 +44,14 @@ function Comment(props) {
                     comment_id: props.comment_id
                 }
         }).then(response => {
-            window.location.reload()
+            if(response.status == "202"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 403){
+                alert("ซนนะมึง")
+            }
         })
     }
 

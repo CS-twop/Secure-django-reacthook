@@ -7,15 +7,21 @@ import {useHistory} from "react-router-dom"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {logout} from "../actions/userActions"
+import Cookies from 'universal-cookie';
 
 function Forum() {
     const history = useHistory()
     const dispatch = useDispatch();
-    const [user, setUser] = useState(localStorage.getItem("username"))
+    const cookies = new Cookies()
+    // const [user, setUser] = useState(localStorage.getItem("username"))
+    const [user, setUser] = useState(cookies.get("username"))
     const [posts, setPosts] = useState([])
 
     const onClickSignOut = () => {
-        localStorage.clear()
+        // localStorage.clear()
+        cookies.remove("access_token")
+        cookies.remove("refresh_token")
+        cookies.remove("username")
         dispatch(logout());
         history.push("/signin")
     }

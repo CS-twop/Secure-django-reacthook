@@ -31,7 +31,14 @@ function Post(props) {
             content:content,
             post_id: id
         }).then(response => {
-            window.location.reload()
+            if(response.status == "202"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 500){
+                alert("ซนนะมึง")
+            }
         })
 
     }
@@ -42,8 +49,14 @@ function Post(props) {
                     post_id: props.id,
                 }
         }).then(response => {
-            window.location.reload()
-
+            if(response.status == "202"){
+                window.location.reload()
+            }
+            return response
+        }).catch((err)=>{
+            if(err.response.status == 403){
+                alert("ซนนะมึง")
+            }
         })
     }
 
