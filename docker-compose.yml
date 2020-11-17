@@ -7,8 +7,6 @@ services:
     container_name: db
     env_file:
       - ./backend/.env
-    ports:
-      - '5432:5432'
 
   backend:
     container_name: backend
@@ -16,11 +14,20 @@ services:
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes: 
       - ./backend:/usr/src/backend/
-    ports:
-      - '8000:8000'
     env_file: 
       - ./backend/.env
     depends_on:
       - db 
     links:
       - db:db
+    
+  frontend: 
+    container_name: frontend 
+    build: ./frontend
+    volumes: 
+      - ./frontend:/usr/src/app/
+    ports: 
+      - '3000:3000'
+    depends_on:
+      - backend
+    
