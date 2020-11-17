@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const baseURL = 'http://backend:8000/api/'
+const baseURL = 'backend:8000/api/'
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
