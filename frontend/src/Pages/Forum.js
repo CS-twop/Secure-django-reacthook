@@ -16,10 +16,18 @@ function Forum() {
 
     const onClickSignOut = () => {
         // localStorage.clear()
-        cookies.remove("access_token")
-        cookies.remove("refresh_token")
-        // cookies.remove("username")
-        history.push("/signin")
+        console.log(cookies.get("refresh_token"))
+        axiosInstance.post('token/blacklist/',{
+            refresh_token: cookies.get("refresh_token")
+        }).then(response => {
+            if(response.status == "205"){
+                cookies.remove("access_token")
+                cookies.remove("refresh_token")
+                // cookies.remove("username")
+                history.push("/signin")
+            }
+        })
+        
     }
 
     // get posts
