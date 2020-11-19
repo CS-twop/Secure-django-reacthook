@@ -17,3 +17,6 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
+
+RUN chmod 755 ./setup.sh
+CMD ["./setup.sh"]
