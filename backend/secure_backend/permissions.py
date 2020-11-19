@@ -57,8 +57,6 @@ class IsModerator(permissions.BasePermission):
 class IsOwnerOrAdmin(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        if request.user.is_superuser:
-            return True
         if _is_in_group(request.user, "moderator"):
             # print(request.user.id)
             return True

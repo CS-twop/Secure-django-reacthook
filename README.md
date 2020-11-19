@@ -10,21 +10,7 @@
 docker-compose up --build
 ```
 
-3. wait until all containers are up.
-
-4. run this command for backend migration.
-
-```bash
-docker exec -it backend python3 manage.py migrate
-```
-
-5. run this command to set all init data.
-
-```bash
-docker exec -it backend python3 manage.py loaddata ./secure_backend/seed/db_1.json
-```
-
-6. you can now access the website at http://localhost:3000/ 
+3. you can now access the website at http://localhost:3000/ 
 (recommend to run Google Chrome cause of CSS issue in some browsers)
 
 ## Useful Information
