@@ -25,7 +25,7 @@ docker exec -it backend python3 manage.py loaddata ./secure_backend/seed/db_1.js
 ```
 
 6. you can now access the website at http://localhost:3000/ 
-(recommend to run Google Chrome cause of CSS issue in some browser.)
+(recommend to run Google Chrome cause of CSS issue in some browsers)
 
 ## Useful Information
 
