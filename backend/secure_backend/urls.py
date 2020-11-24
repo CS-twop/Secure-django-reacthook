@@ -1,18 +1,18 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 
-from .views import (UserCreate, UserGet, \
+from .views import (UserGet, \
     PostCreate, PostList, PostUpdate, PostDelete, \
     CommentCreate, CommentList, CommentUpdate, CommentDelete, \
     LogoutAndBlacklistRefreshToken)
 
 urlpatterns = [
     # User 
-    path(
-        'user/create/', 
-        UserCreate.as_view(), 
-        name='create_user'
-    ),
+    # path(
+    #     'user/create/', 
+    #     UserCreate.as_view(), 
+    #     name='create_user'
+    # ),
     path( 
         'user/',
         UserGet.as_view(),
